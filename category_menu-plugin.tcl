@@ -11,8 +11,7 @@ proc category_menu::load_menutree {} {
     # load object -> tags mapping from file in Pd's path
     set testfile [file join $::current_plugin_loadpath menutree.tcl]
     set f [open $testfile]
-    set menutree [read $f]
-#    set menutree [regsub -all {([\{\s])\-([\s\}])} [read $f] {\1\\\\-\2}]
+    set menutree [regsub -all {\n\s*#[^\n]*} [read $f] "\n"]
     close $f
     unset f        
     return $menutree
