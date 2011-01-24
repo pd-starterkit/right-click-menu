@@ -4,13 +4,15 @@
      { conditionals
          {  sel moses change  } 
 	 } 
-	 {  flip  {  
-	mapping/reverse abs
+	 {  flip  
+	{  reverse abs }  
 	 }  
+     {  "do once"  
+	{  once onebang  }  
 	 }  
-     {  "do once"  {  
-	once onebang  }  
-	 }  
+	{ iterate
+	{ cxc_counter } 
+	}
  }  
 
  {  operations
@@ -18,94 +20,118 @@
          { "+" "-" "*" "/" ">" ">=" "=" "!=" "=<" "<" "%"  } 
 	 } 
 	 { "higher math"
-         { sin cos tan atan atan2 exp log abs sqrt pow } 
+         {random sin cos tan atan atan2 exp log abs sqrt pow acos asin } 
 	 } 
 	 {  logic
          { "&" "|" "&&" "||" ">>" "<<" } 
 	 } 
      {  mapping
-         {  mapping/amplitude_n autoscale breakpoint mapping/center_point mapping/circular mapping/cubic_seat mapping/circular_sigmoid mapping/curve_log } 
+         {  amplitude_n autoscale breakpoint center_point circular cubic_seat circular_sigmoid curve_log } 
 	 } 
  } 
 
- {  "file management"  {  	
-	gui  { 
-		openpanel unauthorized/mp3write~
-		 } 
+ {  "file management"  
+	{  gui  
+	{ openpanel savepanel mp3write~ pix_record } 
+	} 
+} 
+ 
+{ "data conversion"  
+	{ lists  
+	{ tolist } 
 	 } 
- } 
- { "data conversion"  { 
-	lists  { 
-		mapping/tolist
-		 } 
+	 { cartesian 
+	 { cartesian2sperical mapping/vector } 
 	 } 
-	 { cartesian  { 
-		mapping/cartesian2sperical mapping/vector
-		 } 
+	 { polar 
+	 { mapping/polar2cartesian pol2sph pol2rec~ } 
 	 } 
-	 { polar  { 
-		mapping/polar2cartesian zexy/pol2sph motex/pol2rec~
-		 } 
+	 { ascii
+	{ atoi makefilename prepend_ascii splitfilename } 
 	 } 
-	 { ascii	 { 
-		atoi makefilename prepend_ascii splitfilename
-		 } 
-	 } 
-	 {  integer  {  
-		itoa int list2int 
-		 } 
+	 {  integer  
+	{  itoa int list2int } 
 	 } 
 	 { symbol
-		 { iem_symtoalist }  } 
+	{ iem_symtoalist fromsymbol tosymbol } 
+	 } 
 	 { "limit data"
-		 { clip~ }  } 
+		 { clip~ edge~ }  
+		} 
 	 { midi
-		 { mtof }  } 
+		 { mtof midiformat midiparse }  
+		} 
 	 { frequency
-		 { ftom }  } 
+		 { ftom } 
+		 } 
 	 { smoothing
-		 { mapping/autoscale mapping/smooth mapping/speedlimiter- }  }  } 
+		 { autoscale smooth speedlimiter- line } 
+		 } 
+		 } 
  { audio
      { "audio output"
-         { output~ ezdac~ }  } 
+         { output~ ezdac~ }
+  } 
 	 { "audio input"
-         { adc~ }  } 
+         { adc~ } 
+ } 
 	 { transitions
-	     { mapping/curve_fade  }  } 
+	     { curve_fade  } 
+	 } 
 	 { effects
-         { hip~ lop~ unauthorized/beatify~ }  }  } 
+         { hip~ lop~ beatify~ svf~ filterortho~ comb~}  
+} 
+		{ analysis
+	         { bonk~ sigmund~ fiddle~ bfft~} 
+	 }
+ } 
+
  { video
 	 { controls
-		 { playlist~ pix_film gemWin }  } 
-	 { transitions
-		 { gemhead }  } 
+		 { playlist~ pix_film gemWin } 
+		 } 
 	 { effects
-		 { pix_kaleidoscope pix_refraction pix_alpha }  }  } 
+		 { pix_kaleidoscope pix_refraction pix_alpha }  
+		}
+		  } 
  { communication
 	 { osc
-		 { dumpOSC routeOSC  }  } 
+		 { dumpOSC routeOSC  } 
+		 } 
 	 { web
-		 { unauthorized/mp3amp~ unauthorized/mp3cast~ }  }  } 
+		 { mp3amp~ mp3cast~ udpsend udpreceive tcpsend tcpreceive} 
+		 } 
+		 } 
  { 3d
 	 { primitives
-		 { sphere cube polygon curve }  } 
+		 { sphere cube polygon curve } 
+		 } 
 	 { "particle systems"
-		 { +~ /~ *~ pow }  } 
+		 { part_head part_velocity part_source part_killiod part_draw } 
+		 } 
 	 { camera
-		 { ch_gemwin }  } 
+		 { ch_gemwin } 
+		 } 
 	 { lights
-		 { world_light "world_light 101" }  }  } 
+		 { world_light "world_light 101" light} 
+		 } 
+		 } 
  { drawing
-	 { lines
-		 { +~ /~ *~ pow }  } 
+#{ lines
+#{ +~ /~ *~ pow }
+#} 
 	 { shapes
-		 { rectangle circle ploygon triangle }  } 
+		 { rectangle circle polygon triangle } 
+		 } 
 	 { text
-		 { text3d text }  }  } 
+		 { text3d text } 
+		 }  
+		} 
  { input
 	 { computer
-		 { cursor keyname  }  } 
+		 { cursor keyname  ambient_light_sensor }  
+	} 
 	 { peripherals
-		 { hid gemmouse gemkeyboard }  }  } 
-
-
+		 { hid gemmouse gemkeyboard } 
+	 } 
+ } 
