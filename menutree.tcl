@@ -126,7 +126,10 @@
 	 { text
 		 { text3d text } 
 		 }  
-		} 
+         { "in the patch"
+             {table array mapping/timeroll}
+         }
+ }
  { input
 	 { computer
 		 { cursor keyname  ambient_light_sensor }  

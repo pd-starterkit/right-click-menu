@@ -11,6 +11,7 @@ proc category_menu::load_menutree {} {
     # load object -> tags mapping from file in Pd's path
     set testfile [file join $::current_plugin_loadpath menutree.tcl]
     set f [open $testfile]
+    # filter out commented out lines from the data file
     set menutree [regsub -all {\n\s*#[^\n]*} [read $f] "\n"]
     close $f
     unset f        
