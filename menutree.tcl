@@ -95,12 +95,15 @@
 		}
 		  } 
  { communication
-	 { osc
-		 { dumpOSC routeOSC  } 
+	 { OSC
+		 { sendOSC dumpOSC routeOSC} 
 		 } 
 	 { web
 		 { mp3amp~ mp3cast~ udpsend udpreceive tcpsend tcpreceive} 
 		 } 
+	 { networking
+             {maxlib/netserver maxlib/netclient netreceive netsend}
+         }
 		 } 
  { 3d
 	 { primitives
