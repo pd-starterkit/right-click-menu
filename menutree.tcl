@@ -105,7 +105,7 @@
              {maxlib/netserver maxlib/netclient netreceive netsend}
          }
 		 } 
- { 3d
+ { 3D
 	 { primitives
 		 { sphere cube polygon curve } 
 		 } 

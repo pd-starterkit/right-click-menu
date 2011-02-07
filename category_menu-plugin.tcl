@@ -23,16 +23,18 @@ proc category_menu::create {mymenu} {
     $mymenu add separator
     foreach categorylist $menutree {
         set category [lindex $categorylist 0]
-        menu $mymenu.$category
+        set categorymenu $mymenu.[string tolower $category]
+        menu $categorymenu
         $mymenu add cascade -label $category -menu $mymenu.$category
         foreach subcategorylist [lrange $categorylist 1 end] {
             set subcategory [lindex $subcategorylist 0]
-            menu $mymenu.$category.$subcategory
-            $mymenu.$category add cascade -label $subcategory -menu $mymenu.$category.$subcategory
+            set subcategorymenu $categorymenu.[string tolower $subcategory]
+            menu $subcategorymenu
+            $categorymenu add cascade -label $subcategory -menu $subcategorymenu
             foreach item [lindex $subcategorylist end] {
                 # replace the normal dash with a Unicode minus so that Tcl doesn't
                 # interpret the dash in the -label to make it a separator
-                $mymenu.$category.$subcategory add command \
+                $subcategorymenu add command \
                     -label [regsub -all {^\-$} $item {−}] \
                     -command \
                     "pdsend \"\$::focused_window obj \$::popup_xcanvas \$::popup_ycanvas $item\""
